@@ -1,0 +1,24 @@
+{
+  "name": "static-boilerplate",
+  "version": "0.0.0",
+  "description": "Static web boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rtsao/static-boilerplate.git"
+  },
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rtsao/static-boilerplate/issues"
+  },
+  "homepage": "https://github.com/rtsao/static-boilerplate",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "gulp-jade": "^0.11.0",
+    "gulp-data": "^1.2.0"
+  }
+}

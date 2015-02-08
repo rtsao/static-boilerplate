@@ -1,0 +1,4 @@
+ul
+  each link in [{page: 'index', url: '/', label: 'home'}, {page: 'people/index', url: '/people', label: 'people'}]
+    li
+      a(href=link.url)= link.label
