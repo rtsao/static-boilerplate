@@ -4,7 +4,12 @@ var gulp = require('gulp');
 var data = require('gulp-data');
 var jade = require('gulp-jade');
 var less = require('gulp-less');
+var imagemin = require('gulp-imagemin');
 var autoprefixer = require('gulp-autoprefixer');
+
+/**
+ * Config
+ */
 
 var pages = {
   dir: 'src/pages',
@@ -12,8 +17,34 @@ var pages = {
   dest: 'dist'
 };
 
+var styles = {
+  dir: 'src/styles',
+  glob: 'main.less',
+  dest: 'dist/stylesheets'
+};
+
+var images = {
+  dir: 'src/assets/images',
+  glob: '**/*',
+  dest: 'dist/assets/images'
+};
+
+var assets = {
+  dir: 'src/assets',
+  glob: '(!images)/**/*',
+  dest: 'dist/assets'
+}
+
+function source(options) {
+  return path.join(options.dir, options.glob);
+}
+
+/**
+ * Tasks
+ */
+
 gulp.task('pages', ['clean'], function() {
-  return gulp.src(path.join(pages.dir, pages.glob))
+  return gulp.src(source(pages))
     .pipe(data(function(file) {
       var relativeDir = path.relative(pages.dir, path.dirname(file.path))
       var pageName = path.join(relativeDir, path.basename(file.path, '.jade'));
@@ -23,17 +54,22 @@ gulp.task('pages', ['clean'], function() {
     .pipe(gulp.dest(pages.dest));
 });
 
-var styles = {
-  dir: 'src/styles',
-  glob: 'main.less',
-  dest: 'dist/stylesheets'
-};
-
 gulp.task('styles', ['clean'], function() {
-  return gulp.src(path.join(styles.dir, styles.glob))
+  return gulp.src(source(styles))
     .pipe(less({paths:['node_modules/normalize.css']}))
     .pipe(autoprefixer())
     .pipe(gulp.dest(styles.dest));
+});
+
+gulp.task('images', function () {
+  return gulp.src(source(images))
+    .pipe(imagemin())
+    .pipe(gulp.dest(images.dest));
+});
+
+gulp.task('copy-assets', function () {
+  return gulp.src(source(assets))
+    .pipe(gulp.dest(assets.dest));
 });
 
 gulp.task('clean', function(cb) {
@@ -41,3 +77,4 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('build', ['pages', 'styles']);
+
