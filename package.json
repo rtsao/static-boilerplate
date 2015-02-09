@@ -2,9 +2,10 @@
   "name": "static-boilerplate",
   "version": "0.0.0",
   "description": "Static web boilerplate",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "clean": "gulp clean",
+    "compile-stylesheets": "gulp styles"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,12 @@
   },
   "homepage": "https://github.com/rtsao/static-boilerplate",
   "dependencies": {
+    "del": "^1.1.1",
     "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-data": "^1.2.0",
     "gulp-jade": "^0.11.0",
-    "gulp-data": "^1.2.0"
+    "gulp-less": "^2.0.1",
+    "normalize.css": "^3.0.2"
   }
 }
