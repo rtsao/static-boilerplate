@@ -4,8 +4,11 @@ var gulp = require('gulp');
 var data = require('gulp-data');
 var jade = require('gulp-jade');
 var less = require('gulp-less');
+var changed = require('gulp-changed');
 var imagemin = require('gulp-imagemin');
 var autoprefixer = require('gulp-autoprefixer');
+var browserSync = require('browser-sync');
+var hygienist = require('hygienist-middleware');
 
 /**
  * Config
@@ -63,6 +66,7 @@ gulp.task('styles', ['clean'], function() {
 
 gulp.task('images', function () {
   return gulp.src(source(images))
+    .pipe(changed(images.dest))
     .pipe(imagemin())
     .pipe(gulp.dest(images.dest));
 });
@@ -74,6 +78,16 @@ gulp.task('copy-assets', function () {
 
 gulp.task('clean', function(cb) {
   del(['dist'], cb);
+});
+
+gulp.task('server', function() {
+  browserSync({
+    notify: false,
+    server: {
+      middleware: hygienist('dist'),
+      baseDir: 'dist'
+    }
+  });
 });
 
 gulp.task('build', ['pages', 'styles']);
